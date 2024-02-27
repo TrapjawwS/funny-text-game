@@ -38,6 +38,7 @@ const demoDisk = () => ({
 
             onUse() {
                 println(`You eat the cheese. It was pretty tasty`);
+                delete cheese.onUse;
             },
           },
           {
@@ -49,6 +50,7 @@ const demoDisk = () => ({
 
             onUse() {
                 println(`You eat the drugs and now you feel kinda funny`);
+                delete drugs.onUse;
             },
           },
           {
