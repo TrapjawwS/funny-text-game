@@ -28,7 +28,17 @@ const demoDisk = () => ({
         items: [
           {
             name: ['lump of cheese', 'snack', 'cheese'], // the item's name
+            isTakeable: true, // allow the player to TAKE this item
+            onTake: () => println(`You bend down and pick up the lump of cheese.
+  
+            *Now it's in your **inventory**, and you can use it at any time, in any room.
+  
+            Type **INV** to see a list of items in your inventory.*`),
             desc: `Yum.`, // description shown when player looks at the item
+
+            onUse() {
+                println(`You eat the cheese. It was pretty tasty`);
+            },
           },
           {
             name: ['drugs', 'funny stuff', 'yummy'], // player can refer to this item by any of these names
