@@ -23,6 +23,7 @@ const demoDisk = () => ({
           Rooms can also contain **items**. Sometimes the player can **TAKE** or **USE** items.
   
           Type **ITEMS** to see a list of items in the foyer. Or type **HELP** to see what else you can do!`;
+
         },
         // optional list of items in the room
         items: [
@@ -61,47 +62,24 @@ const demoDisk = () => ({
               if (getItem('detonator')) {
                 // the key is already in the pot or the player's inventory
                 return;
+              
               }
-  
-              const testroom = getRoom('testroom');
-  
-              // put the silver key in the pot
-              testroom.items.push({
-                name: 'detonator',
-                onUse() {
-                  const room = getRoom(disk.roomId);
-                  if (room.id === 'testroom') {
-                    println(`You blow up the wall.`);
-                    
-                    enterRoom('reception')
-                  }
+            },  
 
-                },
-                desc: `It's a **DETONATOR**!`,
-                onLook() {
-                  const detonator = getItem('detonator');
-  
-                  // now that we know it's a key, place that name first so the engine calls it by that name
-                  detonator.name.unshift('detonator');
-  
-                  // let's also update the description
-                  detonator.desc = `It has a big button on it`;
-  
-                  // remove this method (we don't need it anymore)
-                  delete detonator.onLook;
-                },
-                isTakeable: true,
-                onTake() {
-                  println(`You took it.`);
-                },
-              });
+            onUse() {
+              const room = getRoom(disk.roomId);
+              if (room.id === 'testroom') {
+                println(`You blow up the wall.`);
+
+                delete detonator.onUse;
+                
+                enterRoom('reception')
+
+              }
+            }
             },
-          }
-        ],
-        // places the player can go from this room
-        exits: [
-          // GO NORTH command leads to the Reception Desk
-          {dir: 'north', id: 'reception'},
+
+            
         ],
       },
       {
