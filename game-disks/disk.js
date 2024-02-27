@@ -55,11 +55,8 @@ const demoDisk = () => ({
           },
           {
             name: 'detonator', // player can refer to this item by any of these names
-            desc: `it'll make stuff explode.
-  
-            There's **explosives** in the wall.`,
-            block: `It's too dangerous for you to take.`, // optional reason player cannot pick up this item
-            // when player looks at the plant, they discover a shiny object which turns out to be a key
+            desc: `it'll make stuff explode.`,
+            isTakeable: true,
             onLook: () => {
               if (getItem('detonator')) {
                 // the key is already in the pot or the player's inventory
