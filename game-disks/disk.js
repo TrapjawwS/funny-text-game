@@ -29,7 +29,7 @@ const demoDisk = () => ({
           {
             name: ['lump of cheese', 'snack', 'cheese'], // the item's name
             isTakeable: true, // allow the player to TAKE this item
-            onTake: () => println(`You bend down and pick up the lump of cheese.
+            onTake: () => println(`You look up and pick up the lump of cheese.
   
             *Now it's in your **inventory**, and you can use it at any time, in any room.
   
@@ -42,7 +42,18 @@ const demoDisk = () => ({
           },
           {
             name: ['drugs', 'funny stuff', 'yummy'], // player can refer to this item by any of these names
-            desc: `This drug will make you see funny stuff.
+            desc: `This drug will make you see funny stuff,`,
+            isTakeable: true, // allow the player to TAKE this item
+            onTake: () => println(`You look down and pick up`),
+            desc: `Yum.`, // description shown when player looks at the item
+
+            onUse() {
+                println(`You eat the drugs and now you feel kinda funny`);
+            },
+          },
+          {
+            name: 'detonator', // player can refer to this item by any of these names
+            desc: `it'll make stuff explode.
   
             There's **explosives** in the wall.`,
             block: `It's too dangerous for you to take.`, // optional reason player cannot pick up this item
@@ -67,42 +78,24 @@ const demoDisk = () => ({
                   }
 
                 },
-                desc: `It's a silver **KEY**!`,
+                desc: `It's a **DETONATOR**!`,
                 onLook() {
-                  const key = getItem('shiny');
+                  const detonator = getItem('detonator');
   
                   // now that we know it's a key, place that name first so the engine calls it by that name
-                  key.name.unshift('silver key');
+                  detonator.name.unshift('detonator');
   
                   // let's also update the description
-                  key.desc = `It has a blue cap with the word "LAB" printed on it.`;
+                  detonator.desc = `It has a big button on it`;
   
                   // remove this method (we don't need it anymore)
-                  delete key.onLook;
+                  delete detonator.onLook;
                 },
                 isTakeable: true,
                 onTake() {
                   println(`You took it.`);
-                  // update the monstera's description, removing everything starting at the line break
-                  const plant = getItem('plant');
-                  plant.desc = plant.desc.slice(0, plant.desc.indexOf('\n'));
                 },
               });
-            },
-          },
-          {
-            name: 'dime',
-            desc: `Wow, ten cents.`,
-            isTakeable: true, // allow the player to TAKE this item
-            onTake: () => println(`You bend down and pick up the tiny, shiny coin.
-  
-            *Now it's in your **inventory**, and you can use it at any time, in any room. (Don't spend it all in one place!)
-  
-            Type **INV** to see a list of items in your inventory.*`),
-            // using the dime randomly prints HEADS or TAILS
-            onUse() {
-              const side = Math.random() > 0.5 ? 'HEADS' : 'TAILS';
-              println(`You flip the dime. It lands on ${side}.`);
             },
           }
         ],
